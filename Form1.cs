@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
@@ -14,25 +7,17 @@ namespace KalkulatorLab01
 {
     public partial class Kalkulator : Form
     {
-
         public Kalkulator()
         {
             InitializeComponent();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
         }
-
-        #region private Var
+        #region variables
         private string result;
         private string operandtype = "";
         private string partOne = string.Empty, partTwo = string.Empty;
         private bool bIsWorking = false;
-
-        #endregion
-        #region Public getter/setter
-
-
-
 
         public string GetResult()
         {
@@ -88,28 +73,24 @@ namespace KalkulatorLab01
 
         private void button_Click(object sender,EventArgs e)
         {
-           
             if ((TextDisplay.Text == "0") || (bIsWorking))
             {
                 TextDisplay.Text = "";
             }
-
             bIsWorking = false;
-
             try
             {
                 Button butn = sender as Button;
                 if (TextDisplay.Text.Length >= 14)
                 {
                     MessageBox.Show("Nie można wpisać więcej znaków!");
-
                 }
                 else
                 {
-
                     if (butn.Text == ".")
                     {
                         if (!TextDisplay.Text.Contains("."))
+                        {
                             if (TextDisplay.Text == "")
                             {
                                 TextDisplay.Text = "0" + butn.Text;
@@ -118,22 +99,17 @@ namespace KalkulatorLab01
                             {
                                 TextDisplay.Text = TextDisplay.Text + butn.Text;
                             }
-
+                        }
                     }
                     else
                     {
                         TextDisplay.Text = TextDisplay.Text + butn.Text;
-
                     }
                 }
-                
-
-                
             }
-            catch (Exception err)
+            catch (Exception error)
             {
-                MessageBox.Show( "Error: " +
-                    err.Message,"Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show( "Error: "+error.Message,"Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -145,11 +121,6 @@ namespace KalkulatorLab01
             textCurrentPart.Text = partOne;
         }
 
-        private void TextDisplay_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonOperationType_Click(object sender, EventArgs e)
         {
             try
@@ -157,48 +128,24 @@ namespace KalkulatorLab01
                 Button butn = sender as Button;
                 double res;
                 double.TryParse(GetResult(), out res);
-               // {
-                  //  MessageBox.Show("Error");
-                   // System.
-               // }
-
-                //if (res != 0)//to wywalic
-               // {
-                    operandtype = butn.Text;
-                    partOne = TextDisplay.Text;
-                    textCurrentPart.Text = partOne + " " + operandtype;
-                    bIsWorking = true;
-              //  }
-              //  else
-             //   {
-              //      operandtype = butn.Text;
-              //      partOne = TextDisplay.Text;
-              //      textCurrentPart.Text = partOne + " " + operandtype;
-              //      bIsWorking = true;
-                  
-              //  }
-
-
+                operandtype = butn.Text;
+                partOne = TextDisplay.Text;
+                textCurrentPart.Text = partOne + " " + operandtype;
+                bIsWorking = true; 
             }
-            catch (Exception err)
+            catch (Exception error)
             {
-                MessageBox.Show("Error: " +
-                   err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void ButtonBackspace_Click(object sender, EventArgs e)
         {
-            if (TextDisplay.Text == "")
-            { }
-            else
+            if (TextDisplay.Text != "")
             {
                 TextDisplay.Text = TextDisplay.Text.Remove(TextDisplay.Text.Length - 1);
             }
-            
         }
-
-        
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
@@ -210,8 +157,6 @@ namespace KalkulatorLab01
             partTwo = TextDisplay.Text;
             double one, two;
 
-            //one = double.Parse(partOne);
-           // two = double.Parse(partTwo);
             double.TryParse(partOne, out one);
             double.TryParse(partTwo, out two);
 
@@ -245,16 +190,20 @@ namespace KalkulatorLab01
             textCurrentPart.Text = partOne;
         }
 
-
         private void buttonChangeSign_Click(object sender, EventArgs e)
         {
             if (TextDisplay.Text.Length <= 0 || TextDisplay.Text == "0")
+            {
                 return;
+            }
             if (TextDisplay.Text[0] == '-')
+            {
                 TextDisplay.Text = TextDisplay.Text.Remove(0, 1);
+            }
             else
+            {
                 TextDisplay.Text = TextDisplay.Text.Insert(0, "-");
+            }
         }
-
     }
 }
